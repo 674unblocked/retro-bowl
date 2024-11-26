@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="retro bowl.jpg" type="image">
+    <title>Retro Bowl | Alexx743</title>
+    <style>
+        /* Remove body margins and make sure everything fills the screen */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 2em;
+            margin: 20px;
+        }
+
+        /* Navigation buttons styling */
+        .topnav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .divbutton {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .divbutton:hover {
+            background-color: #0056b3;
+        }
+
+        /* Fullscreen iframe styling (initial state) */
+        .retro-bowl-iframe {
+            width: 100%;
+            height: 600px; /* Default height */
+            border: none;
+        }
+
+        /* Fullscreen button styling */
+        .fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 123, 255, 0.7);
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 1.5em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .fullscreen:hover {
+            background-color: rgba(0, 123, 255, 1);
+        }
+
+        /* Hide everything else during fullscreen */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+  <h2> Retro Bowl</h2>
+
+  <div class="topnav">
+    <a href="games.html">
+      <button title="Games" id="Games" class="divbutton"> Games </button> 
+    </a> 
+
+    <a href="Apps.html">
+      <button title="Apps" id="Apps" class="divbutton"> Apps</button>
+    </a>
+
+    <a href="index.html">
+      <button title="Home" id="home" class="divbutton">Home</button>
+    </a>
+
+    <a href="shooter.html">
+      <button title="Shooter" class="divbutton">Shooter</button>
+    </a>
+
+    <a href="sports.html">
+      <button title="Sports" class="divbutton">Sports</button>
+    </a>
+
+    <a href="cars.html">
+      <button title="Cars" class="divbutton">Cars</button>
+    </a>
+  </div>
+
+  <!-- Iframe for Retro Bowl game -->
+  <iframe src="https://retro-bowl-six.vercel.app" class="retro-bowl-iframe" id="retroIframe"></iframe>
+
+  <!-- Fullscreen button -->
+  <button onclick="enterFullscreen()" class="fullscreen">Enter Fullscreen</button>
+
+  <script>
+    function enterFullscreen() {
+      // Get the iframe and other elements to hide
+      const iframe = document.querySelector("#retroIframe");
+      const fullscreenButton = document.querySelector(".fullscreen");
+      const navButtons = document.querySelectorAll(".topnav, h2");  // Get nav bar and header
+
+      // Hide all elements except for the iframe
+      navButtons.forEach((el) => el.classList.add("hidden"));
+      fullscreenButton.classList.add("hidden");
+
+      // Make the iframe full screen
+      const stl = iframe.style;
+      stl.border = 'none';
+      stl.width = '100vw';
+      stl.height = '100vh';
+      stl.position = 'fixed';
+      stl.left = '0';
+      stl.top = '0';
+      stl.right = '0';
+      stl.bottom = '0';
+
+      // Optional: Allow exit on clicking iframe (by restoring the original state)
+      iframe.onclick = function () {
+        exitFullscreen();
+      };
+    }
+
+    function exitFullscreen() {
+      // Restore the original state (show nav bar, restore iframe size)
+      const iframe = document.querySelector("#retroIframe");
+      const fullscreenButton = document.querySelector(".fullscreen");
+      const navButtons = document.querySelectorAll(".topnav, h2");
+
+      // Show all elements
+      navButtons.forEach((el) => el.classList.remove("hidden"));
+      fullscreenButton.classList.remove("hidden");
+
+      // Reset iframe size and position
+      const stl = iframe.style;
+      stl.width = '100%';
+      stl.height = '600px';
+      stl.position = 'static';
+      iframe.onclick = null;  // Remove exit fullscreen on click
+    }
+
+    // Handle keyboard shortcut to exit to Google
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "`") { 
+        window.parent.window.location.replace("https://google.com/");
+      }
+    });
+  </script>
+
+</body>
+</html>
